@@ -26,6 +26,8 @@ public class RunSyllogism
         context.addDefinition(mMan, Equivalence.EQUALITY, mMammel);
         context.addDefinition(mMammel, Equivalence.EQUALITY, mAnimal);
 
+        System.err.println(context.interrogate(mMan, Equivalence.EQUALITY, mMammel));
+
         System.out.println( context.interrogate(mMan, Equivalence.EQUALITY, mAnimal));
 
     }
