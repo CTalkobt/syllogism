@@ -15,9 +15,15 @@
 package net.ctalkobt.syllogism;
 
 /****************************************************************************
- *
+ * Defines the type of association between memes.
+ * 
  * @author Craig.Taylor
  ***************************************************************************/
 public enum Equivalence {
+    /**
+     * Defines a strict equality similar to A = B in math. The objects can be
+     * considered identical and equal.  THere is no hierarchical relationship
+     * among them nor ownership.
+     */
     EQUALITY
 }

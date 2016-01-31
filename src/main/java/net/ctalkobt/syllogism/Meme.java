@@ -15,6 +15,10 @@
 package net.ctalkobt.syllogism;
 
 /****************************************************************************
+ * A word that connates a specific meaning.  Note the distinction in a
+ * specific meaning - written or spoken words may have meaning based upon
+ * the context in which they are spoken.  The use of Meme here is used to
+ * convey a specific representation of the given text.
  *
  * @author Craig.Taylor
  ***************************************************************************/

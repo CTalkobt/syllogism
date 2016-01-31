@@ -18,16 +18,25 @@ import net.ctalkobt.syllogism.Equivalence;
 import net.ctalkobt.syllogism.Meme;
 import net.ctalkobt.syllogism.Context;
 
-/**
+/****************************************************************************
+ * Misc test / example program.
  *
  * @author Craig.Taylor
- */
+ ****************************************************************************/
 public class RunSyllogism
 {
 
     /**
+     * Define the following syllogism and validate their validity.
+     *   Man is Mammel.  Mammel is Animal.
+     *
+     * ? Man is Mammel -> TRUE
+     * ? Man is Animal -> TRUE
+     * ? Man is Inanimate -> FALSE
+     *
      * @param args the command line arguments
      */
+    @SuppressWarnings("PMD")  /* System.err.println */
     public static void main(String[] args)
     {
         Context context = new Context();
@@ -37,8 +46,8 @@ public class RunSyllogism
         Meme mAnimal = context.createMeme("Animal");
         Meme mInanimate = context.createMeme("Inanimate");
 
-        context.addDefinition(mMan, Equivalence.EQUALITY, mMammel);
-        context.addDefinition(mMammel, Equivalence.EQUALITY, mAnimal);
+        context.addSyllogism(mMan, Equivalence.EQUALITY, mMammel);
+        context.addSyllogism(mMammel, Equivalence.EQUALITY, mAnimal);
 
         /** Should return true */
         System.err.println(context.interrogate(mMan, Equivalence.EQUALITY, mMammel));
