@@ -3,7 +3,6 @@ package net.ctalkobt;
 import net.ctalkobt.syllogism.Equivalence;
 import net.ctalkobt.syllogism.Meme;
 import net.ctalkobt.syllogism.Context;
-import net.ctalkobt.syllogism.SyllogismStore;
 
 /**
  *
@@ -17,19 +16,24 @@ public class RunSyllogism
      */
     public static void main(String[] args)
     {
-        Context context = new SyllogismStore();
+        Context context = new Context();
 
         Meme mMan = context.createMeme("Man");
         Meme mMammel = context.createMeme("Mammel");
         Meme mAnimal = context.createMeme("Animal");
+        Meme mInanimate = context.createMeme("Inanimate");
 
         context.addDefinition(mMan, Equivalence.EQUALITY, mMammel);
         context.addDefinition(mMammel, Equivalence.EQUALITY, mAnimal);
 
+        /** Should return true */
         System.err.println(context.interrogate(mMan, Equivalence.EQUALITY, mMammel));
 
+        /** Should return true */
         System.out.println( context.interrogate(mMan, Equivalence.EQUALITY, mAnimal));
 
+        /** Should return false */
+        System.out.println( context.interrogate(mMan, Equivalence.EQUALITY, mInanimate));
     }
 
 }

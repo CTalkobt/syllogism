@@ -2,6 +2,7 @@ package net.ctalkobt.syllogism;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.MultiMap;
 import org.apache.commons.collections4.keyvalue.DefaultKeyValue;
@@ -22,6 +23,7 @@ public class Context {
 
     public boolean interrogate(Meme memeKey, Equivalence equivalence, Meme memeValue)
     {
+        boolean result = false;
         Collection<KeyValue<Equivalence, Meme>> memeRelations = (Collection<KeyValue<Equivalence, Meme>>) memeAssociations.get(memeKey);
 
         if (memeRelations == null || memeRelations.isEmpty())
@@ -29,10 +31,14 @@ public class Context {
             return false;
         }
 
-        return  memeRelations.stream().anyMatch((KeyValue<Equivalence, Meme> kv) ->
-        {
-            return kv.getKey().equals(equivalence) && kv.getValue().equals(memeValue);
-        });
+        result = memeRelations
+            .stream()
+            .anyMatch((KeyValue<Equivalence, Meme> kv) ->
+                (kv.getKey().equals(equivalence) && kv.getValue().equals(memeValue)) ||
+                (interrogate(kv.getValue(), equivalence, memeValue))
+            );
+
+        return result;
     }
 
     public Meme createMeme(String text)
