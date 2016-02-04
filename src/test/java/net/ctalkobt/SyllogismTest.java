@@ -17,7 +17,6 @@ package net.ctalkobt;
 import net.ctalkobt.syllogism.Context;
 import net.ctalkobt.syllogism.Equivalence;
 import net.ctalkobt.syllogism.Meme;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +31,10 @@ public class SyllogismTest {
     private Meme mMammel;
     private Meme mAnimal;
     private Meme mInanimate;
-    
+
+    /**
+     * Test setup.
+     */
     @Before
     public void setUp() {
         context = new Context();
@@ -48,12 +50,9 @@ public class SyllogismTest {
 
     }
     
-    @After
-    public void tearDown() {
-    }
-
     /**
-     * Test of main method, of class RunSyllogism.
+     * Given:  X is Y. 
+     * ? X is Y implies true
      */
     @Test
     public void testDirectSyllogism() {
@@ -63,6 +62,10 @@ public class SyllogismTest {
         Assert.assertTrue(context.interrogate(mMan, Equivalence.EQUALITY, mMammel));
     }
     
+    /**
+     * Given X is Y, Y is Z
+     * ? X is Z implies true. 
+    */
     @Test
     public void testInDirectSyllogism() {
         /**
@@ -71,6 +74,10 @@ public class SyllogismTest {
         Assert.assertTrue(context.interrogate(mMan, Equivalence.EQUALITY, mAnimal));
     }
 
+    /**
+     * Given X is Y, Y is Z
+     * ? X is A implies false.
+     */
     @Test
     public void testUnknownSyllogims() {
         /**
