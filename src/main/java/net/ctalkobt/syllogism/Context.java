@@ -63,19 +63,23 @@ public class Context {
             return Optional.empty();
         }
 
-        for (KeyValue<Equivalence, Meme> kv : memeRelations) {
-            if (kv.getKey().equals(equivalence)
-                    && kv.getValue().equals(memeValue)) {
-                return Optional.of(true);
-            } else {
-                Optional<Boolean> result = (interrogate(kv.getValue(), equivalence, memeValue));
-                if (result.isPresent()) {
-                    return result;
-                }
-            }
-        }
+        Optional<KeyValue<Equivalence, Meme>> result = memeRelations
+                .parallelStream()
+                .findFirst()
+                .filter((KeyValue<Equivalence, Meme> kv) -> {
+                    if (kv.getKey().equals(equivalence)
+                            && kv.getValue().equals(memeValue)) {
+                        return true;
+                    } else {
+                        Optional<Boolean> result1 = interrogate(kv.getValue(), equivalence, memeValue);
+                        if (result1.isPresent()) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
 
-        return Optional.empty();        
+        return (result != null && result.isPresent()) ? Optional.of(true) : Optional.empty();
     }
 
     /************************************************************************
