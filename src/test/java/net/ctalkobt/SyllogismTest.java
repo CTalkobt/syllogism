@@ -14,6 +14,7 @@
  ***************************************************************************/
 package net.ctalkobt;
 
+import java.util.Optional;
 import net.ctalkobt.syllogism.Context;
 import net.ctalkobt.syllogism.Equivalence;
 import net.ctalkobt.syllogism.Meme;
@@ -46,8 +47,6 @@ public class SyllogismTest {
 
         context.addSyllogism(mMan, Equivalence.EQUALITY, mMammel);
         context.addSyllogism(mMammel, Equivalence.EQUALITY, mAnimal);
-
-
     }
     
     /**
@@ -59,7 +58,8 @@ public class SyllogismTest {
         /**
          * Should return true
          */
-        Assert.assertTrue(context.interrogate(mMan, Equivalence.EQUALITY, mMammel));
+        Optional<Boolean> result = context.interrogate(mMan, Equivalence.EQUALITY, mMammel);
+        Assert.assertTrue(result.isPresent() && result.get().equals(true));
     }
     
     /**
@@ -71,19 +71,23 @@ public class SyllogismTest {
         /**
          * Should return true
          */
-        Assert.assertTrue(context.interrogate(mMan, Equivalence.EQUALITY, mAnimal));
+        Optional<Boolean> result = context.interrogate(mMan, Equivalence.EQUALITY, mAnimal);
+        Assert.assertTrue(result.isPresent() && result.get().equals(true));
+
     }
 
     /**
      * Given X is Y, Y is Z
-     * ? X is A implies false.
+     * ? X is A implies (unknown).
      */
     @Test
     public void testUnknownSyllogims() {
         /**
          * Should return false
          */
-        Assert.assertFalse(context.interrogate(mMan, Equivalence.EQUALITY, mInanimate));
+        Optional<Boolean> result = context.interrogate(mMan, Equivalence.EQUALITY, mInanimate);
+        System.err.println(">>>" + result); 
+        Assert.assertFalse(result.isPresent());
     }
 
 }

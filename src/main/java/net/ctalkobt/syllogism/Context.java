@@ -15,6 +15,10 @@
 package net.ctalkobt.syllogism;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.MultiMap;
 import org.apache.commons.collections4.keyvalue.DefaultKeyValue;
@@ -48,23 +52,30 @@ public class Context {
      * @param memeKey
      * @param equivalence
      * @param memeValue
-     * @return
+     * @return result if known, otherwise optional.empty(). 
      ***********************************************************************/
-    public boolean interrogate(Meme memeKey, Equivalence equivalence, Meme memeValue)
+    public Optional<Boolean> interrogate(Meme memeKey, Equivalence equivalence, Meme memeValue)
     {
         Collection<KeyValue<Equivalence, Meme>> memeRelations = (Collection<KeyValue<Equivalence, Meme>>) memeAssociations.get(memeKey);
 
         if (memeRelations == null || memeRelations.isEmpty())
         {
-            return false;
+            return Optional.empty();
         }
 
-        return memeRelations
-            .stream()
-            .anyMatch((KeyValue<Equivalence, Meme> kv) ->
-                (kv.getKey().equals(equivalence) && kv.getValue().equals(memeValue)) ||
-                (interrogate(kv.getValue(), equivalence, memeValue))
-            );
+        for (KeyValue<Equivalence, Meme> kv : memeRelations) {
+            if (kv.getKey().equals(equivalence)
+                    && kv.getValue().equals(memeValue)) {
+                return Optional.of(true);
+            } else {
+                Optional<Boolean> result = (interrogate(kv.getValue(), equivalence, memeValue));
+                if (result.isPresent()) {
+                    return result;
+                }
+            }
+        }
+
+        return Optional.empty();        
     }
 
     /************************************************************************
