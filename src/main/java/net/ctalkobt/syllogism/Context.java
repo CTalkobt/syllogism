@@ -57,7 +57,6 @@ public class Context {
     public Optional<Boolean> interrogate(Meme memeKey, Equivalence equivalence, Meme memeValue)
     {
         Collection<KeyValue<Equivalence, Meme>> memeRelations = (Collection<KeyValue<Equivalence, Meme>>) memeAssociations.get(memeKey);
-
         if (memeRelations == null || memeRelations.isEmpty())
         {
             return Optional.empty();
@@ -77,9 +76,13 @@ public class Context {
                         }
                     }
                     return false;
-                });
+            });
 
-        return (result != null && result.isPresent()) ? Optional.of(true) : Optional.empty();
+        if (result != null && result.isPresent())
+        {
+            return Optional.of(equivalence.getTruthEquivalency());
+        }
+        return Optional.empty();
     }
 
     /************************************************************************

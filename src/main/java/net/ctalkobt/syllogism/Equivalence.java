@@ -25,5 +25,24 @@ public enum Equivalence {
      * considered identical and equal.  THere is no hierarchical relationship
      * among them nor ownership.
      */
-    EQUALITY
+    EQUALITY(true),
+    NOTEQUALITY(false);
+    
+    /**
+     * Used to indicate that an equality is indiciviate of a truth. Eg: 
+     * defining X op Y implies that X oop Y evaluates to true / false. 
+     * 
+     * Null implies no definition of logical truth is defined / known. 
+     */
+    private final Boolean truthEquivalency;
+    
+    Equivalence(Boolean truthEquivalency)
+    {
+        this.truthEquivalency = truthEquivalency;
+    }
+    
+    final Boolean getTruthEquivalency()
+    {
+        return truthEquivalency;
+    }
 }
