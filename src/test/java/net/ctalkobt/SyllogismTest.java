@@ -90,4 +90,30 @@ public class SyllogismTest {
         Assert.assertFalse(result.isPresent());
     }
 
+    @Test
+    public void testSimpleNotEquivality() {
+        Meme mA = context.createMeme("A");
+        Meme mB = context.createMeme("B");
+        
+        context.addSyllogism(mA, Equivalence.NOTEQUALITY, mB);
+        
+        Optional<Boolean> result = context.interrogate(mA, Equivalence.NOTEQUALITY, mB);
+        Assert.assertTrue(result.isPresent());
+        Assert.assertTrue(result.get().equals(false));
+    }
+
+    @Test
+    public void testIndirectNonEquivality() {
+        Meme mA = context.createMeme("A");
+        Meme mB = context.createMeme("B");
+        Meme mC = context.createMeme("C");
+        
+        context.addSyllogism(mA, Equivalence.NOTEQUALITY, mB);
+        context.addSyllogism(mB, Equivalence.NOTEQUALITY, mC);
+        
+        Optional<Boolean> result = context.interrogate(mA, Equivalence.NOTEQUALITY, mC);
+        Assert.assertTrue(result.isPresent());
+        Assert.assertTrue(result.get().equals(false));
+    }
+    
 }
