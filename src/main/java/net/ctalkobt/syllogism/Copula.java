@@ -24,9 +24,13 @@ public enum Copula {
      * Defines a strict equality similar to A = B in math. The objects can be
      * considered identical and equal.  THere is no hierarchical relationship
      * among them nor ownership.
+     *//**
+     * Defines a strict equality similar to A = B in math. The objects can be
+     * considered identical and equal.  THere is no hierarchical relationship
+     * among them nor ownership.
      */
-    EQUALITY(true),
-    NOTEQUALITY(false);
+    IS(true),
+    ISNOT(false);
     
     /**
      * Used to indicate that an equality is indiciviate of a truth. Eg: 
