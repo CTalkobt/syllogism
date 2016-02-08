@@ -15,34 +15,25 @@
 package net.ctalkobt.syllogism;
 
 /****************************************************************************
- * Defines the type of association between memes.
- * 
+ * A word that coveys a specific meaning.  Note the distinction in a
+ * specific meaning - written or spoken words may have meaning based upon
+ * the context in which they are spoken.  The use of Meme here is used to
+ * convey a specific representation of the given text.
+ *
  * @author Craig.Taylor
  ***************************************************************************/
-public enum Equivalence {
-    /**
-     * Defines a strict equality similar to A = B in math. The objects can be
-     * considered identical and equal.  THere is no hierarchical relationship
-     * among them nor ownership.
-     */
-    EQUALITY(true),
-    NOTEQUALITY(false);
-    
-    /**
-     * Used to indicate that an equality is indiciviate of a truth. Eg: 
-     * defining X op Y implies that X oop Y evaluates to true / false. 
-     * 
-     * Null implies no definition of logical truth is defined / known. 
-     */
-    private final Boolean truthEquivalency;
-    
-    Equivalence(Boolean truthEquivalency)
+public class Term {
+    private final String textRepresentation;
+
+    Term(String text)
     {
-        this.truthEquivalency = truthEquivalency;
+        this.textRepresentation = text;
     }
-    
-    final Boolean getTruthEquivalency()
+
+    @Override
+    public String toString()
     {
-        return truthEquivalency;
+        return "term:["+textRepresentation+"]";
     }
+
 }

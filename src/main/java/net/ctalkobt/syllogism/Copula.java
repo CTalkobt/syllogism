@@ -15,25 +15,34 @@
 package net.ctalkobt.syllogism;
 
 /****************************************************************************
- * A word that connates a specific meaning.  Note the distinction in a
- * specific meaning - written or spoken words may have meaning based upon
- * the context in which they are spoken.  The use of Meme here is used to
- * convey a specific representation of the given text.
- *
+ * Defines the type of association between terms.
+ * 
  * @author Craig.Taylor
  ***************************************************************************/
-public class Meme {
-    private final String textRepresentation;
-
-    Meme(String text)
+public enum Copula {
+    /**
+     * Defines a strict equality similar to A = B in math. The objects can be
+     * considered identical and equal.  THere is no hierarchical relationship
+     * among them nor ownership.
+     */
+    EQUALITY(true),
+    NOTEQUALITY(false);
+    
+    /**
+     * Used to indicate that an equality is indiciviate of a truth. Eg: 
+     * defining X op Y implies that X oop Y evaluates to true / false. 
+     * 
+     * Null implies no definition of logical truth is defined / known. 
+     */
+    private final Boolean truthEquivalency;
+    
+    Copula(Boolean truthEquivalency)
     {
-        this.textRepresentation = text;
+        this.truthEquivalency = truthEquivalency;
     }
-
-    @Override
-    public String toString()
+    
+    final Boolean getTruthEquivalency()
     {
-        return "m:["+textRepresentation+"]";
+        return truthEquivalency;
     }
-
 }

@@ -32,7 +32,7 @@ import org.apache.commons.collections4.map.MultiValueMap;
  * @author Craig.Taylor
  ***************************************************************************/
 public class Context {
-    private final MultiMap<Meme, KeyValue<Equivalence, Meme>> memeAssociations = new MultiValueMap<>();
+    private final MultiMap<Term, KeyValue<Copula, Term>> memeAssociations = new MultiValueMap<>();
 
     /************************************************************************
      * Defines a syllogism for a given equivalence type.
@@ -41,7 +41,7 @@ public class Context {
      * @param equivalence
      * @param memeValue
      ***********************************************************************/
-    public void addSyllogism(Meme memeKey, Equivalence equivalence, Meme memeValue)
+    public void addSyllogism(Term memeKey, Copula equivalence, Term memeValue)
     {
        memeAssociations.put(memeKey, new DefaultKeyValue<>(equivalence, memeValue));
     }
@@ -54,18 +54,18 @@ public class Context {
      * @param memeValue
      * @return result if known, otherwise optional.empty(). 
      ***********************************************************************/
-    public Optional<Boolean> interrogate(Meme memeKey, Equivalence equivalence, Meme memeValue)
+    public Optional<Boolean> interrogate(Term memeKey, Copula equivalence, Term memeValue)
     {
-        Collection<KeyValue<Equivalence, Meme>> memeRelations = (Collection<KeyValue<Equivalence, Meme>>) memeAssociations.get(memeKey);
+        Collection<KeyValue<Copula, Term>> memeRelations = (Collection<KeyValue<Copula, Term>>) memeAssociations.get(memeKey);
         if (memeRelations == null || memeRelations.isEmpty())
         {
             return Optional.empty();
         }
 
-        Optional<KeyValue<Equivalence, Meme>> result = memeRelations
+        Optional<KeyValue<Copula, Term>> result = memeRelations
                 .parallelStream()
                 .findFirst()
-                .filter((KeyValue<Equivalence, Meme> kv) -> {
+                .filter((KeyValue<Copula, Term> kv) -> {
                     if (kv.getKey().equals(equivalence)
                             && kv.getValue().equals(memeValue)) {
                         return true;
@@ -91,9 +91,9 @@ public class Context {
      * @param text
      * @return
      ***********************************************************************/
-    public Meme createMeme(String text)
+    public Term createMeme(String text)
     {
-        Meme m = new Meme(text);
+        Term m = new Term(text);
         return m;
     }
 }
