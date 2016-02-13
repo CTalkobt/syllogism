@@ -15,10 +15,7 @@
 package net.ctalkobt.syllogism;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.MultiMap;
 import org.apache.commons.collections4.keyvalue.DefaultKeyValue;
@@ -71,14 +68,11 @@ public class Context {
                         return true;
                     } else {
                         Optional<Boolean> result1 = interrogate(kv.getValue(), equivalence, memeValue);
-                        if (result1.isPresent()) {
-                            return true;
-                        }
+                        return result1.isPresent();
                     }
-                    return false;
             });
 
-        if (result != null && result.isPresent())
+        if (result.isPresent())
         {
             return Optional.of(equivalence.getTruthEquivalency());
         }
