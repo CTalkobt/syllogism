@@ -86,7 +86,6 @@ public class SyllogismTest {
          * Should return false
          */
         Optional<Boolean> result = context.interrogate(mMan, Copula.IS, mInanimate);
-        System.err.println(">>>" + result); 
         Assert.assertFalse(result.isPresent());
     }
 
